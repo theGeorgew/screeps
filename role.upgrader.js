@@ -13,12 +13,12 @@ var roleUpgrader = {
         }
         if (creep.memory.upgrading) {
             if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller, {reusePath:3, visualizePathStyle: { stroke: randomColor.run() } });
+                creep.moveTo(creep.room.controller, {reusePath: 13, visualizePathStyle: { stroke: randomColor.run() } });
             }
         } else {
             var sources = creep.room.find(FIND_SOURCES_ACTIVE);
             if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {reusePath:3, visualizePathStyle: { stroke: randomColor.run() } });
+                creep.moveTo(sources[0], {reusePath: 0, visualizePathStyle: { stroke: randomColor.run() } });
             }
         }
     }

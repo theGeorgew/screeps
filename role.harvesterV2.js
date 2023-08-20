@@ -38,7 +38,7 @@ var roleHarvester = {
             var sources = creep.room.find(FIND_SOURCES_ACTIVE);
             var closestSources = creep.pos.findClosestByPath(sources);
             if (creep.harvest(closestSources) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(closestSources, { ignoreCreeps:false, reusePath: 15, visualizePathStyle: { stroke: randomColor.run() } });
+                creep.moveTo(closestSources, { ignoreCreeps:false, reusePath: 0, visualizePathStyle: { stroke: randomColor.run() } });
             }
         }
     }

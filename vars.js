@@ -1,7 +1,7 @@
 var creepSpawnCounts = {
-    harvester: 26,
-    builder: 14,
-    upgrader: 2,
+    harvester: 23,
+    builder: 4,
+    upgrader: 16,
     attacker: 0,
     healer: 0
 }
@@ -26,6 +26,16 @@ var fallbackCreepSpawnProps = {
     attacker: [MOVE,MOVE,WORK,CARRY,ATTACK],
     healer: [MOVE,MOVE,WORK,CARRY,HEAL],
 }
+var noExtraProps = {
+    builder: null,
+    harvester: null,
+    upgrader: null,
+    attacker: null,
+    healer: null,
+}
+var defaultBodyBase = [ MOVE, MOVE, WORK, CARRY] ;
 var fallback = false
 var spawnPropsDesired = !fallback ? creepSpawnProps : fallbackCreepSpawnProps
 var spawnCountsDesired = !fallback ? creepSpawnCounts : fallbackCreepSpawnCounts
+
+module.exports = {spawnCountsDesired,spawnPropsDesired,noExtraProps,defaultBodyBase};

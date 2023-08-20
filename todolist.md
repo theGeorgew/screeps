@@ -9,6 +9,9 @@ automate fallback to harvester periority when everyone dies
 
 refactor common actions in all roles into single files
 
+figure out spawn ordering
 
     // TODO: fix meh tower Handler when you have one
         and energy harvesting for it
+
+make dedicated energy harvesters that dump energy into containers so that bottlenecks arent at the sources

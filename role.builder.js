@@ -15,28 +15,36 @@ var roleBuilder = {
         if (creep.memory.building) {
 
             var repairtargets = creep.room.find(FIND_STRUCTURES, {
-                filter: object => object.hits < object.hitsMax
+                filter: object => object.hits < object.hitsMax && object.hits < 100 //
             });
-            var closestRepairTarget = creep.pos.findClosestByRange(repairtargets);
+            console.log('repair target count: ' + repairtargets.length)
+            var closestRepairTarget = creep.pos.findClosestByPath(repairtargets);
             if (closestRepairTarget != null) {
+                console.log('repair target location: ' + closestRepairTarget)
+
                 if (creep.repair(closestRepairTarget) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(closestRepairTarget);
                 }
-            }
-            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            var closestTarget = creep.pos.findClosestByRange(targets);
-            if (closestTarget != null ) {
-                if (creep.build(closestTarget) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(closestTarget, { reusePath: 3, visualizePathStyle: { stroke: randomColor.run() } });
+            } else{
+                console.log('no repair targets')
+                var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+                console.log('construction target count: ' + targets.length)
+                var closestTarget = creep.pos.findClosestByPath(targets);
+                if (closestTarget != null ) {
+                    console.log('construction target location: ' + closestTarget)
+                    if (creep.build(closestTarget) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(closestTarget, { reusePath: 3, visualizePathStyle: { stroke: randomColor.run() } });
+                    }
+                } else {
+                    console.log("can't find construction site")
                 }
-            } else {
-                //console.log("can't find construction site")
+                
             }
-            
+
         } else {
             var sources = creep.room.find(FIND_SOURCES_ACTIVE);
             if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], { reusePath: 3, visualizePathStyle: { stroke: randomColor.run() } });
+                creep.moveTo(sources[0], { reusePath: 0, visualizePathStyle: { stroke: randomColor.run() } });
             }
         }
     }

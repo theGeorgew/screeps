@@ -5,6 +5,7 @@ var roleAttacker = require('role.attacker');
 var towerHandler = require('tower.handler');
 var purgeDeadCreeps = require('maint.memory');
 var creepSpawn = require('main.creepSpawn');
+var { noExtraProps, spawnCountsDesired } = require('./vars');
 
 module.exports.loop = function () {
 
@@ -13,18 +14,25 @@ module.exports.loop = function () {
     // TODO: fix meh tower Handler when you have one
     towerHandler.run();
     purgeDeadCreeps.run();
-    creepSpawn.run('harvester');
-    creepSpawn.run('builder');
-    creepSpawn.run('upgrader');
-    creepSpawn.run('attacker');
+
+    var harvesterCreeps = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+    console.log('harvesters: '+harvesterCreeps.length)
+    if (harvesterCreeps.length < spawnCountsDesired.harvester) {
+        creepSpawn.run('harvester');
+    } else {
+        creepSpawn.run('builder');
+        creepSpawn.run('upgrader');
+        creepSpawn.run('attacker');
+        //creepSpawn.run('harvester');
+    }
 
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
         var hostiles = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-         if (hostiles != null) {
+        if (hostiles != null) {
             //console.log("found hostile, engaging!")
-            if (creep.body.find((bodyType) => bodyType == 'ATTACK')){
+            if (creep.body.find((bodyType) => bodyType == 'ATTACK')) {
                 roleAttacker.run(creep);
             }
         } else {
